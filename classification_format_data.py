@@ -24,6 +24,6 @@ for entry in dnp[:,2]:
     else:
         dnp[:,2][ind] = 'S'
     ind+=1
-np.save('datalabel_for_classification_numpy.npy', dnp)
+np.save('data/title_classification/datalabel_for_classification_numpy.npy', dnp)
 pd.DataFrame(dnp, columns = ['titles','answer','QorS'])
-df.to_pickle("datalabel_for_classification_pandas.pkl")
+df.to_pickle("data/title_classification/datalabel_for_classification_pandas.pkl")
