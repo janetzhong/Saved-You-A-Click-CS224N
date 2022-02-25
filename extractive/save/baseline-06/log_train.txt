@@ -1,0 +1,25 @@
+[02.24.22 02:47:18] Args: {
+    "batch_size": 16,
+    "do_eval": false,
+    "do_train": true,
+    "eval": false,
+    "eval_datasets": "race,relation_extraction,duorc",
+    "eval_dir": "datasets/oodomain_test",
+    "eval_every": 2000,
+    "lr": 3e-05,
+    "num_epochs": 3,
+    "num_visuals": 10,
+    "recompute_features": false,
+    "run_name": "baseline",
+    "save_dir": "save/baseline-06",
+    "seed": 42,
+    "sub_file": "",
+    "train": false,
+    "train_datasets": "squad,nat_questions,newsqa",
+    "train_dir": "datasets/indomain_train",
+    "val_dir": "datasets/indomain_val",
+    "visualize_predictions": false
+}
+[02.24.22 02:47:18] Preparing Training Data...
+[02.24.22 02:47:18] Preparing Validation Data...
+[02.24.22 02:47:19] Epoch: 0
