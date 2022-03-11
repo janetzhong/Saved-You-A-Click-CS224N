@@ -5,7 +5,7 @@ import datetime
 import pandas as pd
 
 # df = pd.DataFrame(columns=['summary','link','article'])
-data = {'summary':[], 'link':[], 'article':[], 'time':[]}
+data = {'summary':[], 'link':[], 'article':[], 'title':[], 'time':[]}
 
 name = 'SCBEntertainment'
 for i,post in enumerate(get_posts(name, pages=200000)):
@@ -28,6 +28,7 @@ for i,post in enumerate(get_posts(name, pages=200000)):
   data['summary'].append(post['post_text'].replace('#StopClickBait','').replace('#SavedYouAClick',''))
   data['link'].append(post['link'])
   data['article'].append(article.text)
+  data['title'].append(article.title)
   data['time'].append(post['time'])
   # pdb.set_trace()
 df = pd.DataFrame.from_dict(data)

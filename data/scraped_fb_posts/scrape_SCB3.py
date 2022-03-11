@@ -5,7 +5,7 @@ import datetime
 import pandas as pd
 
 # df = pd.DataFrame(columns=['summary','link','article'])
-data = {'summary':[], 'link':[], 'article':[], 'time':[]}
+data = {'summary':[], 'link':[], 'article':[], 'title':[], 'time':[]}
 
 fs = FacebookScraper()
 fs.login('lbc45123@hotmail.com','54lbc123')
@@ -33,6 +33,7 @@ try:
     data['summary'].append(post['post_text'].replace('#StopClickBait','').replace('#SavedYouAClick',''))
     data['link'].append(post['link'])
     data['article'].append(article.text)
+    data['title'].append(article.title)
     data['time'].append(post['time'])
     # pdb.set_trace()
   df = pd.DataFrame.from_dict(data)
