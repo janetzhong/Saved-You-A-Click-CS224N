@@ -7,9 +7,6 @@ import pandas as pd
 # df = pd.DataFrame(columns=['summary','link','article'])
 data = {'summary':[], 'link':[], 'article':[], 'title':[], 'time':[]}
 
-fs = FacebookScraper()
-fs.login('lbc45123@hotmail.com','54lbc123')
-
 name = 'SCBLifestyle'
 try:
   # for i,post in enumerate(get_posts(name, pages=20000, credentials=('lbc45123@hotmail.com','54lbc123'))):
