@@ -247,20 +247,30 @@ def get_dataset(args, datasets, data_dir, tokenizer, split_name):
     dataset_dict = None
     dataset_name=''
     if data_dir == 'datasets/indomain_val':
-        with open('dataset_dict_val.pickle', 'rb') as handle:
+        with open('dataset_dict_val_reddit.pickle', 'rb') as handle:
             dataset_dict = pickle.load(handle)
         dataset_name='val'
         print('val------')
     elif data_dir == 'datasets/indomain_train':
-        with open('dataset_dict_train.pickle', 'rb') as handle:
+        with open('dataset_dict_train_reddit.pickle', 'rb') as handle:
             dataset_dict = pickle.load(handle)
         dataset_name='train'
         print('train------')
     elif data_dir == 'datasets/oodomain_test':
-        with open('dataset_dict_test.pickle', 'rb') as handle:
+        with open('dataset_dict_test_reddit.pickle', 'rb') as handle:
             dataset_dict = pickle.load(handle)
         dataset_name='test'
         print('test------')
+    elif data_dir == 'datasets/fb_test':
+        with open('dataset_dict_test_fb.pickle', 'rb') as handle:
+            dataset_dict = pickle.load(handle)
+        dataset_name='test'
+        print('test fb------')
+    elif data_dir == 'datasets/fb_all':
+        with open('dataset_dict_all_fb.pickle', 'rb') as handle:
+            dataset_dict = pickle.load(handle)
+        dataset_name='test'
+        print('all fb------')
     #dataset_name += f'_{datasets[0]}'
     #for dataset in datasets:
     #   
@@ -304,10 +314,16 @@ def main():
     if args.do_eval:
         args.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
         split_name = 'test' if 'test' in args.eval_dir else 'validation'
+        split_name = 'validation'
+        
         log = util.get_logger(args.save_dir, f'log_{split_name}')
         trainer = Trainer(args, log)
         checkpoint_path = os.path.join(args.save_dir, 'checkpoint')
-        model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
+        #model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
+        if(1):
+            model = AutoModelForQuestionAnswering.from_pretrained(checkpoint_path)
+        else:
+            print('evalulating on unfinetuned')
         model.to(args.device)
         eval_dataset, eval_dict = get_dataset(args, args.eval_datasets, args.eval_dir, tokenizer, split_name)
         eval_loader = DataLoader(eval_dataset,
@@ -318,7 +334,7 @@ def main():
                                                    split=split_name)
         results_str = ', '.join(f'{k}: {v:05.2f}' for k, v in eval_scores.items())
         log.info(f'Eval {results_str}')
-        # Write submission file
+
         sub_path = os.path.join(args.save_dir, split_name + '_' + args.sub_file)
         log.info(f'Writing submission file to {sub_path}...')
         with open(sub_path, 'w', newline='', encoding='utf-8') as csv_fh:
